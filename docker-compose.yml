@@ -1,0 +1,13 @@
+# RabbitMQ with management UI on 15672 and AMQP on 5672; persist data.
+version: '3.9'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports: [ "5672:5672", "15672:15672" ]
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbit-data:/var/lib/rabbitmq
+volumes:
+  rabbit-data: {}

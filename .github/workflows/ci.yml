@@ -1,0 +1,15 @@
+# Build, test (NUnit), and format a .NET 8 repo. Fail on format drift.
+name: ci
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+      - run: dotnet restore
+      - run: dotnet build -c Release --no-restore
+      - run: dotnet test  -c Release --no-build --collect:"XPlat Code Coverage"
+      - run: dotnet tool restore
+      - run: dotnet format --verify-no-changes
